@@ -1,16 +1,14 @@
-//sound instantiation
+// Imported libraries
 import ddf.minim.*;
-Minim minim;
-AudioPlayer player;
-
-//controlP5 instantiation
 import controlP5.*;
+
+// Global variables
+Minim minim;
 ControlP5 cp5;
 
 int mouseStatus;
-
-//array of available notes
-String[] notes = {
+AudioSample[] notes = new AudioSample[13];
+String[] noteStrings = {
   "C3", "C#3", "D3", "D#3",
   "E3", "F3", "F#3", "G3",
   "G#3", "A3", "A#3", "B3",
@@ -22,9 +20,11 @@ void setup() {
   cp5 = new ControlP5(this);
   minim = new Minim(this);
   
-  //Create a button for each piano note
-  for (int i = 0; i < notes.length; i++) {
-    cp5.addButton(notes[i])
+  // Create a button for each piano note
+  for (int i = 0; i < noteStrings.length; i++) {
+    notes[i] = minim.loadSample("piano/" + noteStrings[i] + ".wav", 512);
+    
+    cp5.addButton(noteStrings[i])
       .setValue(i)
       .setPosition(10 + (i*80), 400)
       .setSize(79,200)
@@ -34,8 +34,7 @@ void setup() {
 
 void draw() {
   background(200);
-  if ( mouseStatus != checkForMouseOver(mouseX, mouseY) )
-  {
+  if ( mouseStatus != checkForMouseOver(mouseX, mouseY) ){
     mouseStatus = checkForMouseOver(mouseX, mouseY);
     playNote(mouseStatus);
   }
@@ -61,7 +60,6 @@ public void playNote (int cmd)
 {
   if (cmd != -1)
   {
-    player = minim.loadFile("piano/" + notes[cmd] + ".wav");
-    player.play(); 
+    notes[cmd].trigger();
   }
 }
