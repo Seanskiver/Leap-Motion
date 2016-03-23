@@ -1,22 +1,26 @@
-class Instrument {
-  File dir;
-  int wX, wY;
-  String name;
+abstract class Instrument {
+  String name = "Instrument", dir;
+  JSONObject config;
+  PImage bg;
   PShape shape;
-  PImage background;
+  boolean active = false, fullscreen = false;
   
-  public Instrument(File dirIn){
-    dir = dirIn;
-    JSONObject config = loadJSONObject(dir.getName() + "/instrument.json");
-    wX = config.getInt("width");
-    wY = config.getInt("height");
-    name = config.getString("name");
-    shape = loadShape("instruments/" + name + "/models/model.svg");
-    background = loadImage("instruments/" + name + "/gfx/image.jpg");
+  Instrument(String name){
+    this.name = name;
+    this.dir = "instruments/" + name;
+    this.config = loadJSONObject(this.dir + "/instrument.json");
+    this.shape = loadShape(this.dir + "/models/model.svg");
+    this.bg = loadImage(this.dir + "/models/background.png");
   }
   
-  public void play(){
-    size(wX, wY);
-    background(background);
+  void run(){
+    if (!this.active){
+      surface.setSize(config.getInt("width"), config.getInt("height"));
+      this.active = true;
+    }
+    
+    step();
   }
+  
+  abstract void step(); // Instrument logic goes here
 }
