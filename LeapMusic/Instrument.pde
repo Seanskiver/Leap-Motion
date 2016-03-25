@@ -4,5 +4,5 @@ interface Instrument {
   int getStageHeight();
   boolean isActive();
   void activate();
-  void step();
+  void step(ConcurrentMap<Integer, Vector> fPositions);
 }

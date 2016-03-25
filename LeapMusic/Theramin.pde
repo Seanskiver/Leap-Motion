@@ -22,7 +22,7 @@ class Theramin implements Instrument{
   boolean isActive(){return active;}
   void activate(){active = true;}
   
-  void step(){
+  void step(ConcurrentMap<Integer, Vector> fPositions){
     image(stageBG, 0, 0, width, height);
     shape(shape, 0, 0, width, height);
   }
