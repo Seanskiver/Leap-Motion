@@ -24,7 +24,7 @@ void setup(){
 
 void draw(){
   background(51);
-  if (instrument != null) instrument.run();
+  if (instrument != null) if (instrument.isActive()) instrument.step();
 }
 
 void gui() {
@@ -44,11 +44,17 @@ void gui() {
 void slInst(int n){
   String selection = (String)cp5.get(ScrollableList.class, "slInst").getItem(n).get("text");
   if (selection == "Piano") {
-    println("You chose Piano");
-    // instrument = new Piano();
+    instrument = new Piano();
+    launchInstrument(instrument);
   }
   else if (selection == "Theramin"){
-    println("You chose Theramin");
     instrument = new Theramin();
+    launchInstrument(instrument);
   }
+}
+
+void launchInstrument(Instrument anInstrument){
+  println("Launching instrument " + anInstrument.getName());
+  surface.setSize(anInstrument.getStageWidth(), anInstrument.getStageHeight());
+  anInstrument.activate();
 }

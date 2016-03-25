@@ -1,19 +1,19 @@
-class Theramin implements Instrument{
+class Piano implements Instrument{
   String name = "", dir = "";
   int stageWidth = 0, stageHeight = 0;
   boolean active = false;
-  PImage stageBG = null;
-  PShape shape = null;
+  //PImage stageBG = null;
+  //PShape shape = null;
   //JSONObject config = null;
   
-  Theramin(){
-    name = "Theramin";
+  Piano(){
+    name = "Piano";
     dir = "instruments/" + name;
     stageWidth = 1600;
     stageHeight = 900;
     
-    stageBG = loadImage(dir + "/models/background.png");
-    shape = loadShape(dir + "/models/model.svg");
+    //stageBG = loadImage(dir + "/models/background.png");
+    //shape = loadShape(dir + "/models/model.svg");
   }
   
   String getName(){return name;}
@@ -23,7 +23,6 @@ class Theramin implements Instrument{
   void activate(){active = true;}
   
   void step(){
-    image(stageBG, 0, 0, width, height);
-    shape(shape, 0, 0, width, height);
+    
   }
 }
